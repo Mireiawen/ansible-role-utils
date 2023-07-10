@@ -1,0 +1,67 @@
+---
+## /* vim: set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
+
+- name: "Install common Debian system packages"
+  ansible.builtin.package:
+    name:
+    - "apt-transport-https"
+    - "aptitude"
+    state: "{{ utils_package_state }}"
+  when:
+  - "ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'"
+
+- name: "Install common system packages"
+  ansible.builtin.package:
+    name:
+    - "acl"
+    - "arping"
+    - "bc"
+    - "bzip2"
+    - "ca-certificates"
+    - "curl"
+    - "dnsutils"
+    - "dos2unix"
+    - "etckeeper"
+    - "htop"
+    - "iotop"
+    - "jq"
+    - "keychain"
+    - "locales"
+    - "mailutils"
+    - "net-tools"
+    - "netcat"
+    - "pwgen"
+    - "rsync"
+    - "vim"
+    - "vim-addon-manager"
+    state: "{{ utils_package_state }}"
+
+- name: "Install common development helpers"
+  ansible.builtin.package:
+    name:
+    - "j2cli"
+  when:
+  - "utils_install_development | default(true)"
+
+- name: "Install build toolchains"
+  ansible.builtin.package:
+    name:
+    - "build-essential"
+    - "software-properties-common"
+    - "git"
+    - "autoconf"
+    - "automake"
+    - "bison"
+    - "debhelper"
+    - "flex"
+    - "libtool"
+    state: "{{ utils_package_state }}"
+  when:
+  - "utils_install_build_tools | default(true)"
+
+- name: "Install defined extra packages"
+  ansible.builtin.package:
+    name: "{{ utils_extra_packages }}"
+    state: "{{ utils_package_state }}"
+  when:
+  - "utils_extra_packages is defined"
