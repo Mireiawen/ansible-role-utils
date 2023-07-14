@@ -10,32 +10,12 @@ galaxy_info:
 
   min_ansible_version: '7.1'
   platforms:
-  - name: 'Alpine'
-    versions:
-    - 'all'
-  - name: 'ArchLinux'
-    versions:
-    - 'all'
   - name: 'Debian'
     versions:
-    # '10 Buster'
-    - 'buster'
     # '11 Bullseye'
     - 'bullseye'
-  - name: 'Fedora'
-    versions:
-    - 'all'
-  # RedHat Enterprise Linux
-  - name: 'EL'
-    versions:
-    - '7'
-    - '8'
   - name: 'Ubuntu'
     versions:
-    # '18.04 Bionic'
-    - 'bionic'
-    # '20.04 Focal'
-    - 'focal'
     # '22.04 Jammy'
     - 'jammy'
 

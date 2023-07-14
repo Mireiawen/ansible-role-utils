@@ -21,6 +21,12 @@ molecule:test:
   stage: 'test'
   extends: '.molecule:test'
 
+  parallel:
+    matrix:
+    - distro:
+      - 'ubuntu2204'
+      - 'debian11'
+
 molecule:destroy:
   stage: 'destroy'
   extends: '.molecule:destroy'
