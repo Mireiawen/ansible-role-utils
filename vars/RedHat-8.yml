@@ -1,0 +1,21 @@
+---
+## /* vim: set ft=yaml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
+
+utils_package_state: "present"
+utils_common_packages:
+- "acl"
+- "bc"
+- "bzip2"
+- "ca-certificates"
+- "curl"
+- "dos2unix"
+- "jq"
+- "net-tools"
+- "rsync"
+- "vim"
+
+utils_build_packages:
+- "git"
+- "autoconf"
+- "automake"
+- "libtool"

@@ -1,6 +1,21 @@
 ---
 ## /* vim: set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
 
+# Variable setup
+- name: "Include OS-specific variables"
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+  - files:
+    - "{{ ansible_os_family }}.yml"
+    - "default.yml"
+
+- name: "Include distribution and version-specific vars."
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+  - files:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    skip: true
+
 - name: "Install common Debian system packages"
   ansible.builtin.package:
     name:
@@ -10,51 +25,30 @@
   when:
   - "ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'"
 
+- name: "Install full curl package"
+  ansible.builtin.dnf:
+    name: "curl-full"
+    state: "present"
+    allowerasing: true
+  when:
+  - "utils_install_full_curl"
+
 - name: "Install common system packages"
   ansible.builtin.package:
-    name:
-    - "acl"
-    - "arping"
-    - "bc"
-    - "bzip2"
-    - "ca-certificates"
-    - "curl"
-    - "dnsutils"
-    - "dos2unix"
-    - "etckeeper"
-    - "htop"
-    - "iotop"
-    - "jq"
-    - "keychain"
-    - "locales"
-    - "mailutils"
-    - "net-tools"
-    - "netcat"
-    - "pwgen"
-    - "rsync"
-    - "vim"
-    - "vim-addon-manager"
+    name: "{{ utils_common_packages }}"
     state: "{{ utils_package_state }}"
 
 - name: "Install common development helpers"
   ansible.builtin.package:
-    name:
-    - "j2cli"
+    name: "{{ utils_dev_helper_packages }}"
+    state: "{{ utils_package_state }}"
   when:
   - "utils_install_development | default(true)"
+  - "utils_dev_helper_packages is defined"
 
 - name: "Install build toolchains"
   ansible.builtin.package:
-    name:
-    - "build-essential"
-    - "software-properties-common"
-    - "git"
-    - "autoconf"
-    - "automake"
-    - "bison"
-    - "debhelper"
-    - "flex"
-    - "libtool"
+    name: "{{ utils_build_packages }}"
     state: "{{ utils_package_state }}"
   when:
   - "utils_install_build_tools | default(true)"

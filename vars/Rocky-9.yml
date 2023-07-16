@@ -1,5 +1,4 @@
 ---
 ## /* vim: set ft=yaml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
 
-utils_package_state: "present"
-utils_install_full_curl: false
+utils_install_full_curl: true

@@ -5,13 +5,13 @@
   hosts: 'all'
   become: true
 
-
   pre_tasks:
   - name: 'Make sure the package cache is up to date'
     ansible.builtin.apt:
       update_cache: true
     when:
     - "ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'"
+    changed_when: false
 
   roles:
   - role: 'mireiawen.utils'
